@@ -1,0 +1,3 @@
+[submodule "PingClientBase"]
+	path = PingClientBase
+	url = https://github.com/TCPingInfoView/PingClientBase
