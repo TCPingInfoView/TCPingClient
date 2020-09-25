@@ -25,6 +25,26 @@ namespace TCPingClient
 			{
 				token.ThrowIfCancellationRequested();
 
+				if (EndPoint?.Address == null)
+				{
+					return new PingResult
+					{
+						Latency = -1.0,
+						Status = IPStatus.BadDestination,
+						Info = @"Wrong ip address"
+					};
+				}
+
+				if (EndPoint.Port <= IPEndPoint.MinPort || EndPoint.Port > IPEndPoint.MaxPort)
+				{
+					return new PingResult
+					{
+						Latency = -1.0,
+						Status = IPStatus.DestinationPortUnreachable,
+						Info = @"Wrong port"
+					};
+				}
+
 				using var tcp = new TcpClient(EndPoint.AddressFamily);
 
 				var sw = new Stopwatch();
