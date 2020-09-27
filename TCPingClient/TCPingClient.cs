@@ -19,7 +19,7 @@ namespace TCPingClient
 
 		public IPEndPoint EndPoint { get; set; }
 
-		public async ValueTask<PingResult> Ping(CancellationToken token)
+		public async ValueTask<PingResult> PingAsync(CancellationToken token)
 		{
 			try
 			{
