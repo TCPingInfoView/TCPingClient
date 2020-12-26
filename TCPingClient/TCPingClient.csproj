@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>TCPingInfoView.TCPingClient</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>HMBSbige</Authors>
     <Copyright>Copyright © HMBSbige 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -24,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="TCPingInfoView.PingClientBase" Version="0.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="TCPingInfoView.PingClientBase" Version="0.1.1" />
   </ItemGroup>
 
 </Project>
