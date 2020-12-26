@@ -62,7 +62,7 @@ namespace TCPingClient
 				{
 					return new PingResult
 					{
-						Latency = TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds).TotalSeconds,
+						Latency = sw.ElapsedMilliseconds,
 						Status = PingStatus.Success,
 						Info = $@"Success: {tcp.Client.LocalEndPoint} => {tcp.Client.RemoteEndPoint}"
 					};
@@ -86,7 +86,7 @@ namespace TCPingClient
 			{
 				return new PingResult
 				{
-					Latency = Timeout.TotalSeconds,
+					Latency = Timeout.TotalMilliseconds,
 					Status = PingStatus.TimedOut,
 					Info = @"TimedOut"
 				};
@@ -125,7 +125,7 @@ namespace TCPingClient
 				{
 					return new PingResult
 					{
-						Latency = TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds).TotalSeconds,
+						Latency = sw.ElapsedMilliseconds,
 						Status = PingStatus.Success,
 						Info = $@"Success: {tcp.Client.LocalEndPoint} => {tcp.Client.RemoteEndPoint}"
 					};
@@ -140,7 +140,7 @@ namespace TCPingClient
 			{
 				return new PingResult
 				{
-					Latency = Timeout.TotalSeconds,
+					Latency = Timeout.TotalMilliseconds,
 					Status = PingStatus.TimedOut,
 					Info = @"TimedOut"
 				};

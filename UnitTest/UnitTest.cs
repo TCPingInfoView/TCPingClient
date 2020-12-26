@@ -33,12 +33,12 @@ namespace UnitTest
 			var res0 = await client.PingAsync(default);
 			Console.WriteLine(res0);
 			Assert.AreEqual(PingStatus.Success, res0.Status);
-			Assert.IsTrue(res0.Latency < client.Timeout.TotalSeconds);
+			Assert.IsTrue(res0.Latency < client.Timeout.TotalMilliseconds);
 
 			var res1 = client.Ping();
 			Console.WriteLine(res1);
 			Assert.AreEqual(PingStatus.Success, res1.Status);
-			Assert.IsTrue(res1.Latency < client.Timeout.TotalSeconds);
+			Assert.IsTrue(res1.Latency < client.Timeout.TotalMilliseconds);
 		}
 	}
 }
