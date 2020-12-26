@@ -1,9 +1,6 @@
-﻿using PingClientBase;
+using PingClientBase;
 using System;
-using System.Diagnostics;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,102 +16,24 @@ namespace TCPingClient
 
 		public IPEndPoint EndPoint { get; set; }
 
-		public async ValueTask<PingResult> PingAsync(CancellationToken token)
+		public ValueTask<PingResult> PingAsync(CancellationToken token)
 		{
-			try
-			{
-				token.ThrowIfCancellationRequested();
+			throw new NotImplementedException();
+		}
 
-				if (EndPoint?.Address == null)
-				{
-					return new PingResult
-					{
-						Latency = -1.0,
-						Status = IPStatus.BadDestination,
-						Info = @"Wrong ip address"
-					};
-				}
+		public PingResult Ping()
+		{
+			throw new NotImplementedException();
+		}
 
-				if (EndPoint.Port <= IPEndPoint.MinPort || EndPoint.Port > IPEndPoint.MaxPort)
-				{
-					return new PingResult
-					{
-						Latency = -1.0,
-						Status = IPStatus.DestinationPortUnreachable,
-						Info = @"Wrong port"
-					};
-				}
-
-				using var tcp = new TcpClient(EndPoint.AddressFamily);
-
-				var sw = new Stopwatch();
-
-				sw.Start();
-
-				var task = tcp.ConnectAsync(EndPoint.Address, EndPoint.Port);
-
-				var resTask = await Task.WhenAny(task, Task.Delay(Timeout, token));
-
-				sw.Stop();
-
-				if (resTask.IsFaulted && resTask.Exception?.InnerException != null)
-				{
-					throw resTask.Exception?.InnerException;
-				}
-
-				if (resTask != task)
-				{
-					if (token.IsCancellationRequested)
-					{
-						throw new OperationCanceledException();
-					}
-					throw new TimeoutException();
-				}
-
-				if (tcp.Connected)
-				{
-					return new PingResult
-					{
-						Latency = sw.ElapsedMilliseconds,
-						Status = IPStatus.Success,
-						Info = $@"Success: {tcp.Client.LocalEndPoint} => {tcp.Client.RemoteEndPoint}"
-					};
-				}
-				throw new Exception(@"Failed");
-			}
-			catch (OperationCanceledException)
-			{
-				return new PingResult
-				{
-					Latency = -1.0,
-					Status = IPStatus.Unknown,
-					Info = @"Task was canceled"
-				};
-			}
-			catch (TimeoutException)
-			{
-				return new PingResult
-				{
-					Latency = Timeout.TotalMilliseconds,
-					Status = IPStatus.TimedOut,
-					Info = @"TimedOut"
-				};
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				return new PingResult
-				{
-					Latency = -1.0,
-					Status = IPStatus.Unknown,
-					Info = ex.Message
-				};
-			}
+		public void Dispose()
+		{
+			throw new NotImplementedException();
 		}
 
 		public ValueTask DisposeAsync()
 		{
-			return default;
+			throw new NotImplementedException();
 		}
 	}
 }

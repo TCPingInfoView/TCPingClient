@@ -1,15 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>TCPingInfoView.TCPingClient</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>HMBSbige</Authors>
+    <Copyright>Copyright © HMBSbige 2021</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/TCPingInfoView</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/TCPingInfoView/TCPingClient</RepositoryUrl>
+    <PackageTags>ping</PackageTags>
+    <PackageIcon>TCPing.png</PackageIcon>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\PingClientBase\PingClientBase.csproj">
-			<Private>false</Private>
-			<ExcludeAssets>runtime</ExcludeAssets>
-		</ProjectReference>
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="TCPing.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TCPingInfoView.PingClientBase" Version="0.1.0" />
+  </ItemGroup>
 
 </Project>
