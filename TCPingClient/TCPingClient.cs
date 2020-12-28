@@ -67,33 +67,14 @@ namespace TCPingClient
 						Info = $@"Success: {tcp.Client.LocalEndPoint} => {tcp.Client.RemoteEndPoint}"
 					};
 				}
-				throw new TCPingException(-1.0, PingStatus.Unknown, @"Connect Failed");
+				throw new TCPingException(-1.0, PingStatus.Failed, @"Connect failed");
 			}
 			catch (TCPingException ex)
 			{
 				return ex.Result;
 			}
-			catch (OperationCanceledException)
+			catch (OperationCanceledException ex)
 			{
-				return new PingResult
-				{
-					Latency = -1.0,
-					Status = PingStatus.Unknown,
-					Info = @"Task was canceled"
-				};
-			}
-			catch (TimeoutException)
-			{
-				return new PingResult
-				{
-					Latency = Timeout.TotalMilliseconds,
-					Status = PingStatus.TimedOut,
-					Info = @"TimedOut"
-				};
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, @"{0} ", LoggerHeader);
 				return new PingResult
 				{
 					Latency = -1.0,
@@ -101,57 +82,25 @@ namespace TCPingClient
 					Info = ex.Message
 				};
 			}
-		}
-
-		public PingResult Ping()
-		{
-			try
-			{
-				CheckAddress();
-				CheckPort();
-
-				using var tcp = new TcpClient(EndPoint!.AddressFamily);
-
-				var sw = Stopwatch.StartNew();
-				var success = tcp.ConnectAsync(EndPoint.Address, EndPoint.Port).Wait(Timeout);
-				sw.Stop();
-
-				if (!success)
-				{
-					throw new TimeoutException();
-				}
-
-				if (tcp.Connected)
-				{
-					return new PingResult
-					{
-						Latency = sw.ElapsedMilliseconds,
-						Status = PingStatus.Success,
-						Info = $@"Success: {tcp.Client.LocalEndPoint} => {tcp.Client.RemoteEndPoint}"
-					};
-				}
-				throw new TCPingException(-1.0, PingStatus.Unknown, @"Connect Failed");
-			}
-			catch (TCPingException ex)
-			{
-				return ex.Result;
-			}
-			catch (TimeoutException)
+			catch (TimeoutException ex)
 			{
 				return new PingResult
 				{
 					Latency = Timeout.TotalMilliseconds,
 					Status = PingStatus.TimedOut,
-					Info = @"TimedOut"
+					Info = ex.Message
 				};
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, @"{0} ", LoggerHeader);
+				if (ex is not SocketException)
+				{
+					_logger.LogError(ex, @"{0} ", LoggerHeader);
+				}
 				return new PingResult
 				{
 					Latency = -1.0,
-					Status = PingStatus.Unknown,
+					Status = PingStatus.Failed,
 					Info = ex.Message
 				};
 			}
