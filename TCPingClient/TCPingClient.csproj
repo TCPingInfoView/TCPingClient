@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>TCPingInfoView.TCPingClient</PackageId>
-    <Version>0.1.2</Version>
+    <Version>0.1.3</Version>
     <Authors>HMBSbige</Authors>
     <Copyright>Copyright © HMBSbige 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
