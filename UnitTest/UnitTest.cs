@@ -119,7 +119,7 @@ namespace UnitTest
 		[DataRow(@"1.0.0.1", 443)]
 		public async Task TestCanceledAsync(string ip, int port)
 		{
-			using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(10));
+			using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(0));
 
 			await using var client = NewTCPingClient;
 			client.Timeout = TimeSpan.FromSeconds(3);
@@ -136,7 +136,7 @@ namespace UnitTest
 		[DataRow(@"1.0.0.1", 443)]
 		public async Task TestTimedOutAsync(string ip, int port)
 		{
-			var timeout = TimeSpan.FromMilliseconds(10);
+			var timeout = TimeSpan.FromMilliseconds(0);
 
 			await using var client = NewTCPingClient;
 			client.Timeout = timeout;
